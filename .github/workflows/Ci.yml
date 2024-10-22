@@ -11,29 +11,34 @@ jobs:
     name: Code style and tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
+          node-version: '22'  # Ensure you're using a compatible Node.js version
+          cache: 'npm'
 
       - name: 📦 Install dependencies
         run: npm ci
 
       - name: 🧪 Run all tests
-        run: npm run test
+        run: npm test  # Ensure your package.json has a "test" script
 
       - name: 💄 Code style
-        run: npm run check-style
+        run: npm run check-style  # Ensure your package.json has a "check-style" script
 
   codespell:
     name: Check for spelling errors
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: codespell-project/actions-codespell@master
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Check for spelling errors
+        uses: codespell-project/actions-codespell@master
         with:
-          # file types to ignore
+          # File types to ignore
           skip: "*.json,*.yml,DIRECTORY.md"
           ignore_words_list: "ba,esy,yse,falsy"
